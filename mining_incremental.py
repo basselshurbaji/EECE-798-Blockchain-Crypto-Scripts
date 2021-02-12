@@ -1,4 +1,3 @@
-import random
 from time import time
 from hashlib import sha256
 from datetime import datetime
