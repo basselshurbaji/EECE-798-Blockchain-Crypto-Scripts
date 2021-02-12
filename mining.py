@@ -16,7 +16,7 @@ nonce = 0
 
 # LEADING ZEROS
 MIN_LEADING_ZEROS = 10
-MAX_LEADING_ZEROS = 30
+MAX_LEADING_ZEROS = 27
 
 # Formatting Data
 NAME_HEX = NAME.encode(encoding='ascii', errors='ignore').hex()
@@ -25,10 +25,10 @@ ID_HEX = '{:08x}'.format(ID)
 PREVIOUS_HASH_HEX = '{:064x}'.format(PREVIOUS_HASH)
 TIME_STAMP_HEX = '{:08x}'.format(TIME_STAMP)
 
-csv_str = 'Required Leading Zeros, Nonce, Hash, Time'
-
+# Mining Loop
+csv_str = 'Required Leading Zeros, Nonce, Hash, Time (seconds)'
 leading_zeros = MIN_LEADING_ZEROS
-while leading_zeros < MAX_LEADING_ZEROS:
+while leading_zeros <= MAX_LEADING_ZEROS:
     block_hash = pow(2, 256)
     block_hash_hex = ''
     start_time = time()
@@ -39,13 +39,14 @@ while leading_zeros < MAX_LEADING_ZEROS:
         block_hash_hex = sha256(block_data).hexdigest()
         block_hash = int(block_hash_hex, 16)
     end_time = time()
-    seconds = end_time - start_time
-    csv_row = str(leading_zeros) + ', 0x' + '{:08x}'.format(nonce) + ", 0x" + block_hash_hex + ", " + str(seconds)
+    seconds_elapsed = '{:.2f}'.format(end_time - start_time)
+    csv_row = str(leading_zeros) + ', 0x' + '{:08x}'.format(nonce) + ", 0x" + block_hash_hex + ", " + seconds_elapsed
     csv_str += '\n' + csv_row
     print(csv_row)
     leading_zeros = leading_zeros + 1
 
+# Publish Results to CSV File
 current_time = datetime.now().strftime("%d-%m-%Y %H.%M.%S")
-file = open('mining_output' + current_time + '.csv', 'w+')
+file = open('mining_output ' + current_time + '.csv', 'w+')
 file.write(csv_str)
 file.close()
