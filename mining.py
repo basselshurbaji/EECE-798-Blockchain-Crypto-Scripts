@@ -9,7 +9,14 @@ EMAIL = 'bms23@mail.aub.edu'
 ID = 201801284
 PREVIOUS_HASH = 0x00000000000000000001f37f994d809554741b50276b32fe7e8cf3fd45db9980
 TIME_STAMP = int(time())
+
+# NONCE
+MAX_NONCE = pow(2, 32) - 1
 nonce = 0
+
+# LEADING ZEROS
+MIN_LEADING_ZEROS = 10
+MAX_LEADING_ZEROS = 30
 
 # Formatting Data
 NAME_HEX = NAME.encode(encoding='ascii', errors='ignore').hex()
@@ -20,16 +27,16 @@ TIME_STAMP_HEX = '{:08x}'.format(TIME_STAMP)
 
 csv_str = 'Required Leading Zeros, Nonce, Hash, Time'
 
-leading_zeros = 10
-while leading_zeros < 30:
-    MAX_NONCE = pow(2, 32) - 1
+leading_zeros = MIN_LEADING_ZEROS
+while leading_zeros < MAX_LEADING_ZEROS:
     block_hash = pow(2, 256)
     block_hash_hex = ''
     start_time = time()
     while block_hash > pow(2, 256 - leading_zeros):
         nonce = random.randint(0, MAX_NONCE)
-        block_data = PREVIOUS_HASH_HEX + '{:08x}'.format(nonce) + TIME_STAMP_HEX + ID_HEX + EMAIL_HEX + NAME_HEX
-        block_hash_hex = sha256(block_data.encode()).hexdigest()
+        block_data_hex = PREVIOUS_HASH_HEX + '{:08x}'.format(nonce) + TIME_STAMP_HEX + ID_HEX + EMAIL_HEX + NAME_HEX
+        block_data = bytes.fromhex(block_data_hex)
+        block_hash_hex = sha256(block_data).hexdigest()
         block_hash = int(block_hash_hex, 16)
     end_time = time()
     seconds = end_time - start_time
