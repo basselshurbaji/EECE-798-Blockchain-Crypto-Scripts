@@ -1,2 +1,4 @@
 /.idea
 /venv
+mining_incremental_output*
+mining_randomized_output*
