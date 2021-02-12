@@ -1,4 +1,4 @@
-import random
+from random import randint
 from time import time
 from hashlib import sha256
 from datetime import datetime
@@ -34,7 +34,7 @@ while leading_zeros <= MAX_LEADING_ZEROS:
     block_hash_hex = ''
     start_time = time()
     while block_hash > pow(2, 256 - leading_zeros):
-        nonce = random.randint(0, MAX_NONCE)
+        nonce = randint(0, MAX_NONCE)
         block_data_hex = PREVIOUS_HASH_HEX + '{:08x}'.format(nonce) + TIME_STAMP_HEX + ID_HEX + EMAIL_HEX + NAME_HEX
         block_data = bytes.fromhex(block_data_hex)
         block_hash_hex = sha256(block_data).hexdigest()
