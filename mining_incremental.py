@@ -14,15 +14,20 @@ MAX_NONCE = pow(2, 32) - 1
 nonce = 0
 
 # LEADING ZEROS
-MIN_LEADING_ZEROS = 10
+MIN_LEADING_ZEROS = 24
 MAX_LEADING_ZEROS = 27
 
 # Formatting Data
 NAME_HEX = NAME.encode(encoding='ascii', errors='ignore').hex()
+print("Name: " + NAME_HEX)
 EMAIL_HEX = EMAIL.encode(encoding='ascii', errors='ignore').hex()
+print("Email: " + EMAIL_HEX)
 ID_HEX = '{:08x}'.format(ID)
+print("ID: " + ID_HEX)
 PREVIOUS_HASH_HEX = '{:064x}'.format(PREVIOUS_HASH)
+print("Previous Hash: " + PREVIOUS_HASH_HEX)
 TIME_STAMP_HEX = '{:08x}'.format(TIME_STAMP)
+print("TimeStamp: " + TIME_STAMP_HEX)
 
 # Mining Loop
 csv_str = 'Required Leading Zeros, Nonce, Hash, Time (seconds)'
@@ -33,7 +38,8 @@ while leading_zeros <= MAX_LEADING_ZEROS:
     block_hash_hex = ''
     nonce = -1
     start_time = time()
-    while block_hash > pow(2, 256 - leading_zeros):
+    block_hash_upper_limit = pow(2, 256 - leading_zeros)
+    while block_hash > block_hash_upper_limit:
         nonce += 1
         block_data_hex = PREVIOUS_HASH_HEX + '{:08x}'.format(nonce) + TIME_STAMP_HEX + ID_HEX + EMAIL_HEX + NAME_HEX
         block_data = bytes.fromhex(block_data_hex)
