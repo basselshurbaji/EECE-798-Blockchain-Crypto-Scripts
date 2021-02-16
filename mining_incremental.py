@@ -15,22 +15,27 @@ nonce = 0
 
 # LEADING ZEROS
 MIN_LEADING_ZEROS = 20
-MAX_LEADING_ZEROS = 27
+MAX_LEADING_ZEROS = 23
 
 # Formatting Data
 NAME_HEX = NAME.encode(encoding='ascii', errors='ignore').hex()
-print("Name: " + NAME_HEX)
+print("Name: 0x" + NAME_HEX)
 EMAIL_HEX = EMAIL.encode(encoding='ascii', errors='ignore').hex()
-print("Email: " + EMAIL_HEX)
+print("Email: 0x" + EMAIL_HEX)
 ID_HEX = '{:08x}'.format(ID)
-print("ID: " + ID_HEX)
+print("ID: 0x" + ID_HEX)
 PREVIOUS_HASH_HEX = '{:064x}'.format(PREVIOUS_HASH)
-print("Previous Hash: " + PREVIOUS_HASH_HEX)
+print("Previous Hash: 0x" + PREVIOUS_HASH_HEX)
 TIME_STAMP_HEX = '{:08x}'.format(TIME_STAMP)
-print("TimeStamp: " + TIME_STAMP_HEX)
+print("TimeStamp: 0x" + TIME_STAMP_HEX)
 
 # Mining Loop
-csv_str = 'Required Leading Zeros, Nonce, Hash, Time (seconds)'
+csv_str = 'Name, ' + NAME + ', 0x' + NAME_HEX
+csv_str += '\n' + 'Email, ' + EMAIL + ', 0x' + EMAIL_HEX
+csv_str += '\n' + 'ID, ' + str(ID) + ', 0x' + ID_HEX
+csv_str += '\n' + 'Previous Hash, ' + ', 0x' + PREVIOUS_HASH_HEX
+csv_str += '\n' + 'Time Stamp, ' + str(TIME_STAMP) + ', 0x' + TIME_STAMP_HEX
+csv_str += '\n' + 'Required Leading Zeros, Nonce, Hash, Time (seconds)'
 leading_zeros = MIN_LEADING_ZEROS
 print("# Incremental Mining Loop #")
 while leading_zeros <= MAX_LEADING_ZEROS:
