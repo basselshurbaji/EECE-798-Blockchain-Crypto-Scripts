@@ -14,7 +14,7 @@ MAX_NONCE = pow(2, 32) - 1
 nonce = 0
 
 # LEADING ZEROS
-MIN_LEADING_ZEROS = 24
+MIN_LEADING_ZEROS = 20
 MAX_LEADING_ZEROS = 27
 
 # Formatting Data
